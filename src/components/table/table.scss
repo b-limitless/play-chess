@@ -1,34 +1,37 @@
+@import "../../styles/colors";
+@import "../../styles/variables";
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-  
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-  
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid $light;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: $light-1; /* Light mode background color */
+    color: $dark-2; /* Light mode text color */
+  }
+
+  td {
+    background-color: $light; /* Light mode background color */
+    color: $dark-2; /* Light mode text color */
+  }
+
+  /* Dark mode styles */
+  @media (prefers-color-scheme: dark) {
     th {
-      background-color: #f2f2f2; /* Light mode background color */
-      color: #333; /* Light mode text color */
+      background-color: $dark-1; /* Dark mode background color */
+      color: $light; /* Dark mode text color */
     }
-  
+
     td {
-      background-color: #fff; /* Light mode background color */
-      color: #333; /* Light mode text color */
-    }
-  
-    /* Dark mode styles */
-    @media (prefers-color-scheme: dark) {
-      th {
-        background-color: #333; /* Dark mode background color */
-        color: #fff; /* Dark mode text color */
-      }
-  
-      td {
-        background-color: #222; /* Dark mode background color */
-        color: #fff; /* Dark mode text color */
-      }
+      background-color: $dark-1; /* Dark mode background color */
+      color: $light; /* Dark mode text color */
     }
   }
-  
+}

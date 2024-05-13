@@ -164,6 +164,7 @@ const App: React.FC = () => {
         {startGame && <section className='game'>
           <div className='col'>
             <Chessboard
+            
               width={400}
               position={fen}
               // onDrop prop tracks every time a piece is moved.
@@ -182,7 +183,6 @@ const App: React.FC = () => {
             />
 
             <Button type='round' variant='primary' onClick={() => handleResign(chess, setFen, setGameHistory)}>Resign</Button>
-            {/* <Button type='round' variant='primary' onClick={startChessGame}>Start Game</Button> */}
           </div>
 
           <div className='col'>
