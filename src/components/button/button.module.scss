@@ -1,0 +1,28 @@
+@import "../../styles/colors";
+@import "../../styles/variables";
+.btn {
+  border: none;
+  color: $light;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  padding: 19px 56px;
+  column-gap: 15px;
+  font-family: $default-font;
+  align-items: center;
+  cursor: pointer;
+}
+.primary {
+  background: $dark-1;
+  box-shadow: 0px 7px 20px 0px rgba(121, 188, 207, 0.4);
+}
+
+.round {
+  border-radius: 100px;
+}

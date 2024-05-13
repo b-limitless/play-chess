@@ -1,13 +1,29 @@
 //https://tyler-reicks.medium.com/create-a-chess-game-with-react-and-chessboardjsx-%EF%B8%8F-128d1995a743
-import React, { useState } from "react";
-import "./App.css";
+import { Chess, ChessInstance } from "chess.js";
 import Chessboard from "chessboardjsx";
-import { ChessInstance, ShortMove, Chess } from "chess.js";
+import React, { useState } from "react";
+import './styles/main.scss';
+import './app.scss';
+import Table from "./components/table/table";
+import Welcome from "./layouts/welcome/welcome";
 
+enum ETeam {
+  Black = 'black',
+  White = 'white'
+}
 interface ISquareStyling {
   pieceSquare: any;
-  history:any;
+  history: any;
 }
+
+// Define a function to handle the computer's move
+const generateComputerMove = (game: ChessInstance): string => {
+  // Logic to generate the computer's move goes here
+  // For now, let's just choose a random move from the available legal moves
+  const moves = game.moves();
+  const randomMove = moves[Math.floor(Math.random() * moves.length)];
+  return randomMove;
+};
 
 const squareStyling = ({ pieceSquare, history }: ISquareStyling) => {
   const sourceSquare = history.length && history[history.length - 1].from;
@@ -34,21 +50,33 @@ const App: React.FC = () => {
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   );
   const [fen, setFen] = useState(chess.fen());
-  const [squareStyles, setSquareStyles] = useState<any>({}); 
+  const [squareStyles, setSquareStyles] = useState<any>({});
   const [pieceSquare, setPieceSquare] = useState<any>({});
   const [history, setHistory] = useState<any>([]);
-  const [dropSquareStyle, setDropSquareStyle] = useState<any>({});
+  const [dropSquareStyle, setDropSquareStyle] = useState<any>([]);
+  const [gameId, setGameId] = useState<string | null>(null)
+
+  const [gameHistory, setGameHistory] = useState<any[]>([]);
+  const [startGame, setStartGame] = useState<boolean>(false);
+  // {from, to, team, piece}
 
   // Logic for the setting up the random computer move.
-  const handleMove = (move: ShortMove) => {
+  const handleMove = (move: any) => {
     // Line 29 validates the user move.
 
-    
-    if (chess.move(move)) {
+    if (chess.turn() === 'w') {
+      const { from, to, piece } = move;
+      setGameHistory(prevHistory => [...prevHistory, { from, to, piece, team: 'white' }]);
+    }
+
+
+    const isMoved = chess.move(move);
+
+    if (isMoved) {
       setTimeout(() => {
         const moves = chess.moves();
-        if(chess.game_over() || chess.in_draw() || moves.length === 0) {
-          console.log('the game is over'); 
+        if (chess.game_over() || chess.in_draw() || moves.length === 0) {
+          console.log('the game is over');
           return;
         } else {
           console.log('game is not over')
@@ -56,8 +84,17 @@ const App: React.FC = () => {
 
         // Lines 33-28: Computer random move.
         if (moves.length > 0) {
-          const computerMove = moves[Math.floor(Math.random() * moves.length)];
-          chess.move(computerMove);
+          const computerMove = generateComputerMove(chess);
+
+          const moveComputer = chess.move(computerMove);
+
+          // console.log('compuer move', moveComputer)
+
+          const { from, to, piece } = moveComputer as any;
+          setGameHistory(prevHistory => [...prevHistory, { from, to, piece, team: 'black' }]);
+          console.log('Black move', moveComputer);
+
+
           setFen(chess.fen());
         }
       }, 300);
@@ -79,23 +116,24 @@ const App: React.FC = () => {
       },
       {}
     );
-  
+
     setSquareStyles((prevStyles: any) => ({
       ...prevStyles,
       ...highlightStyles
     }));
   };
-  
-  const onDragOverSquare = (square:any) => {
+
+  const onDragOverSquare = (square: any) => {
     setDropSquareStyle(
-      
-        square === "e4" || square === "d4" || square === "e5" || square === "d5"
-          ? { backgroundColor: "cornFlowerBlue" }
-          : { boxShadow: "inset 0 0 1px 4px rgb(255, 255, 0)" }
+
+      square === "e4" || square === "d4" || square === "e5" || square === "d5"
+        ? { backgroundColor: "cornFlowerBlue" }
+        : { boxShadow: "inset 0 0 1px 4px rgb(255, 255, 0)" }
     );
   };
 
-  const onSquareClick = (square:any) => {
+  const onSquareClick = (square: any) => {
+
     setSquareStyles(squareStyling({ pieceSquare: square, history }))
 
     let move = chess.move({
@@ -109,19 +147,19 @@ const App: React.FC = () => {
 
     setFen(chess.fen());
     setPieceSquare('');
-    setHistory(chess.history({verbose: true}))
+    setHistory(chess.history({ verbose: true }))
   };
 
 
   // keep clicked square style and remove hint squares
-  const removeHighlightSquare = (square:any) => {
+  const removeHighlightSquare = (square: any) => {
     setSquareStyles(squareStyling({ pieceSquare, history }))
   };
 
-  const onMouseOutSquare = (square:any) => removeHighlightSquare(square);
+  const onMouseOutSquare = (square: any) => removeHighlightSquare(square);
 
-  const onMouseOverSquare = (square:any) => {
-    console.log('Hello world');
+  const onMouseOverSquare = (square: any) => {
+
     // get list of possible moves for this square
     let moves = chess.moves({
       square: square,
@@ -139,34 +177,60 @@ const App: React.FC = () => {
     highlightSquare(square, squaresToHighlight);
   };
 
+  const onDrop = (move: any) => {
+
+    const moveObject = {
+      from: move.sourceSquare,
+      to: move.targetSquare,
+      piece: move.piece,
+
+      // This promotion attribute changes pawns to a queen if they reach the other side of the board.
+      promotion: "q",
+    };
+    //  setGameHistory([...gameHistory, moveObject]);
+
+    handleMove(moveObject)
+  }
+
+  const handleResign = () => {
+    chess.reset();
+    setFen(chess.fen());
+    setHistory(null);
+
+  }
+
+  const startChessGame = () => {
+  }
+
+
   return (
-    <div className="flex-center">
-      <h1>Random Chess Game</h1>
-      <Chessboard
-        width={400}
-        position={fen}
-        // onDrop prop tracks every time a piece is moved.
-        // The rest is handled in the the handleMove function.
-        onDrop={(move) =>
-          handleMove({
-            from: move.sourceSquare,
-            to: move.targetSquare,
-            // This promotion attribute changes pawns to a queen if they reach the other side of the board.
-            promotion: "q",
-          })
-        }
-        boardStyle={{
-          borderRadius: "5px",
-          boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
-        }}
-        squareStyles={squareStyles}
-        dropSquareStyle={dropSquareStyle}
-        onDragOverSquare={onDragOverSquare}
-        onSquareClick={onSquareClick}
-        onMouseOutSquare= {onMouseOutSquare}
-        onMouseOverSquare={onMouseOverSquare}
-      />
-     
+    <div className="container">
+      <Welcome/>
+      {/* <section className="game">
+        <h1>Play with computer</h1>
+        <Chessboard
+          width={400}
+          position={fen}
+          // onDrop prop tracks every time a piece is moved.
+          // The rest is handled in the the handleMove function.
+          onDrop={onDrop}
+          boardStyle={{
+            borderRadius: "5px",
+            boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+          }}
+          squareStyles={squareStyles}
+          dropSquareStyle={dropSquareStyle}
+          onDragOverSquare={onDragOverSquare}
+          onSquareClick={onSquareClick}
+          onMouseOutSquare={onMouseOutSquare}
+          onMouseOverSquare={onMouseOverSquare}
+        />
+
+        <button onClick={handleResign}>Resign</button>
+        <button onClick={startChessGame}>Start Game</button>
+
+        <Table data={gameHistory} />
+      </section> */}
     </div>
   );
 };
