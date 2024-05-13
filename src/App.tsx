@@ -206,7 +206,7 @@ const App: React.FC = () => {
 
 
   return (
-    <div className='app dark-mode'>
+    <div className='app'>
     <Header/>
     <div className='container'>
       {/* <Welcome/> */}

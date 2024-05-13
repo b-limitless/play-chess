@@ -21,10 +21,10 @@ body {
     color: $light;
 }
 
-@media (prefers-color-scheme: dark) {
-    .app {
-        background-color: $dark;
-    color: $light;
-    }
-}
+// @media (prefers-color-scheme: dark) {
+//     .app {
+//         background-color: $dark;
+//     color: $light;
+//     }
+// }
 
