@@ -11,6 +11,7 @@ import { squareStyling } from './utils/squareStyling';
 import { generateComputerMove } from './utils/generateComputerMove';
 import { handleResign } from './utils/handleResign';
 import { onMouseOverSquare } from './utils/onMouseOverSquare';
+import { DropSquareStyle, GameHistoryItem, Move, PieceSquare, SquareStyles } from './interfaces/chess.interface';
 
 enum ETeam {
   Black = 'black',
@@ -23,12 +24,12 @@ const App: React.FC = () => {
     new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
   );
   const [fen, setFen] = useState(chess.fen());
-  const [squareStyles, setSquareStyles] = useState<any>({});
-  const [pieceSquare, setPieceSquare] = useState<any>({});
-  const [history, setHistory] = useState<any>([]);
-  const [dropSquareStyle, setDropSquareStyle] = useState<any>([]);
+  const [squareStyles, setSquareStyles] = useState<SquareStyles>({});
+  const [pieceSquare, setPieceSquare] = useState<any>({})
+  const [history, setHistory] = useState<Move[]>([]);
+  const [dropSquareStyle, setDropSquareStyle] = useState<any>({});
 
-  const [gameHistory, setGameHistory] = useState<any[]>([]);
+  const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
   const [startGame, setStartGame] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
