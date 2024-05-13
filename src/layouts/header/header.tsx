@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { ChangeEventHandler } from 'react'
 import Switch from '../../components/switch/switch';
 import './header.scss';
 
-export default function Header() {
+interface IHeader {
+  darkModeOnChangeHandler: ChangeEventHandler<HTMLInputElement>;
+}
+export default function Header({darkModeOnChangeHandler}: IHeader) {
   return (
     <header>
-      <Switch/>
+      <Switch
+      onChange={darkModeOnChangeHandler}
+      />
     </header>
   )
 }

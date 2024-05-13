@@ -1,6 +1,10 @@
+@import "../../styles/colors";
+@import "../../styles/variables";
+
+
 header {
-  background-color: #333;
-  color: #fff;
+  background-color: $dark;
+  color: $light;
   padding: 20px;
   display: flex;
   justify-content: flex-end;

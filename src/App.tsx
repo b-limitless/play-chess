@@ -1,7 +1,7 @@
 //https://tyler-reicks.medium.com/create-a-chess-game-with-react-and-chessboardjsx-%EF%B8%8F-128d1995a743
 import { Chess, ChessInstance } from 'chess.js';
 import Chessboard from 'chessboardjsx';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './styles/main.scss';
 import './app.scss';
 import Table from './components/table/table';
@@ -60,6 +60,7 @@ const App: React.FC = () => {
 
   const [gameHistory, setGameHistory] = useState<any[]>([]);
   const [startGame, setStartGame] = useState<boolean>(false);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   // {from, to, team, piece}
 
   // Logic for the setting up the random computer move.
@@ -204,10 +205,23 @@ const App: React.FC = () => {
   const startChessGame = () => {
   }
 
+  const darkModeOnChangeHandler = (e:any) => {
+    setDarkMode(prevState => !prevState);
+  }
 
+  // Without even changing was re-rendering 4 times
+  // Therefore using memo to memotize the value
+  const darkModeMemo = useMemo(() => darkMode, [darkMode])
+
+
+
+  
   return (
-    <div className='app'>
-    <Header/>
+    <div className={`app ${darkModeMemo ? 'dark-mode' : ''}`}>
+    
+    <Header
+    darkModeOnChangeHandler={darkModeOnChangeHandler}
+    />
     <div className='container'>
       {/* <Welcome/> */}
       <section className='game'>
