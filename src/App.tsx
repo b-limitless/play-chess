@@ -1,4 +1,3 @@
-//https://tyler-reicks.medium.com/create-a-chess-game-with-react-and-chessboardjsx-%EF%B8%8F-128d1995a743
 import { Chess, ChessInstance } from 'chess.js';
 import Chessboard from 'chessboardjsx';
 import React, { useMemo, useState } from 'react';
@@ -36,18 +35,17 @@ const App: React.FC = () => {
   // Logic for the setting up the random computer move.
   const handleMove = (move: any) => {
     // Line 29 validates the user move.
-
+    
     if (chess.turn() === 'w') {
       const { from, to, piece } = move;
-      setGameHistory(prevHistory => [...prevHistory, { from, to, piece, team: ETeam.White }]);
+       setGameHistory(prevHistory => [...prevHistory, { from, to, piece, team: ETeam.White }]);
     }
+    
     const isMoved = chess.move(move);
-
     if (isMoved) {
       setTimeout(() => {
         const moves = chess.moves();
         if (chess.game_over() || chess.in_draw() || moves.length === 0) {
-          console.log('the game is over');
           setGameHistory([]);
           return;
         }
@@ -66,6 +64,12 @@ const App: React.FC = () => {
       }, 300);
       // Sets state of chess board
       setFen(chess.fen());
+      
+    } else {
+      console.log('even running')
+      setGameHistory(prevHistory => prevHistory.slice(0, -1));
+
+  
     }
   };
 
@@ -124,26 +128,8 @@ const App: React.FC = () => {
 
   const onMouseOutSquare = (square: any) => removeHighlightSquare(square);
 
-  // const onMouseOverSquare = (square: any) => {
-
-  //   // get list of possible moves for this square
-  //   let moves = chess.moves({
-  //     square: square,
-  //     verbose: true
-  //   });
-
-  //   // exit if there are no moves available for this square
-  //   if (moves.length === 0) return;
-
-  //   let squaresToHighlight = [];
-  //   for (var i = 0; i < moves.length; i++) {
-  //     squaresToHighlight.push(moves[i].to);
-  //   }
-
-  //   highlightSquare(square, squaresToHighlight);
-  // };
-
   const onDrop = (move: any) => {
+    console.log('ondrop', 'running ondrop')
 
     const moveObject = {
       from: move.sourceSquare,
@@ -156,15 +142,6 @@ const App: React.FC = () => {
     //  setGameHistory([...gameHistory, moveObject]);
 
     handleMove(moveObject)
-  }
-
-  // const handleResign = () => {
-  //   chess.reset();
-  //   setFen(chess.fen());
-  //   setGameHistory([]);
-  // }
-
-  const startChessGame = () => {
   }
 
   const darkModeOnChangeHandler = (e: any) => {
@@ -182,8 +159,9 @@ const App: React.FC = () => {
         darkModeOnChangeHandler={darkModeOnChangeHandler}
       />
       <div className='container'>
-        {/* <Welcome/> */}
-        <section className='game'>
+        {!startGame && <Welcome setStartGame={setStartGame}/>}
+
+        {startGame && <section className='game'>
           <div className='col'>
             <Chessboard
               width={400}
@@ -211,7 +189,9 @@ const App: React.FC = () => {
             <Table data={gameHistory} />
           </div>
 
-        </section>
+        </section>}
+      
+      
       </div>
     </div>
 
