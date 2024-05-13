@@ -1,17 +1,17 @@
 import { Chess, ChessInstance } from 'chess.js';
 import Chessboard from 'chessboardjsx';
 import React, { useMemo, useState } from 'react';
-import './styles/main.scss';
 import './app.scss';
-import Table from './components/table/table';
-import Welcome from './layouts/welcome/welcome';
 import { Button } from './components/button';
+import Table from './components/table/table';
+import { GameHistoryItem, Move, SquareStyles } from './interfaces/chess.interface';
 import Header from './layouts/header/header';
-import { squareStyling } from './utils/squareStyling';
+import Welcome from './layouts/welcome/welcome';
+import './styles/main.scss';
 import { generateComputerMove } from './utils/generateComputerMove';
 import { handleResign } from './utils/handleResign';
 import { onMouseOverSquare } from './utils/onMouseOverSquare';
-import { DropSquareStyle, GameHistoryItem, Move, PieceSquare, SquareStyles } from './interfaces/chess.interface';
+import { squareStyling } from './utils/squareStyling';
 
 enum ETeam {
   Black = 'black',
@@ -33,15 +33,12 @@ const App: React.FC = () => {
   const [startGame, setStartGame] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
-  // Logic for the setting up the random computer move.
   const handleMove = (move: any) => {
-    // Line 29 validates the user move.
-    
     if (chess.turn() === 'w') {
       const { from, to, piece } = move;
-       setGameHistory(prevHistory => [...prevHistory, { from, to, piece, team: ETeam.White }]);
+      setGameHistory(prevHistory => [...prevHistory, { from, to, piece, team: ETeam.White }]);
     }
-    
+
     const isMoved = chess.move(move);
     if (isMoved) {
       setTimeout(() => {
@@ -65,12 +62,9 @@ const App: React.FC = () => {
       }, 300);
       // Sets state of chess board
       setFen(chess.fen());
-      
-    } else {
-      console.log('even running')
-      setGameHistory(prevHistory => prevHistory.slice(0, -1));
 
-  
+    } else {
+      setGameHistory(prevHistory => prevHistory.slice(0, -1));
     }
   };
 
@@ -121,7 +115,6 @@ const App: React.FC = () => {
     setHistory(chess.history({ verbose: true }))
   };
 
-
   // keep clicked square style and remove hint squares
   const removeHighlightSquare = (square: any) => {
     setSquareStyles(squareStyling({ pieceSquare, history }))
@@ -130,8 +123,6 @@ const App: React.FC = () => {
   const onMouseOutSquare = (square: any) => removeHighlightSquare(square);
 
   const onDrop = (move: any) => {
-    console.log('ondrop', 'running ondrop')
-
     const moveObject = {
       from: move.sourceSquare,
       to: move.targetSquare,
@@ -160,12 +151,12 @@ const App: React.FC = () => {
         darkModeOnChangeHandler={darkModeOnChangeHandler}
       />
       <div className='container'>
-        {!startGame && <Welcome setStartGame={setStartGame}/>}
+        {!startGame && <Welcome setStartGame={setStartGame} />}
 
         {startGame && <section className='game'>
           <div className='col'>
             <Chessboard
-            
+
               width={400}
               position={fen}
               // onDrop prop tracks every time a piece is moved.
@@ -189,10 +180,7 @@ const App: React.FC = () => {
           <div className='col'>
             <Table data={gameHistory} />
           </div>
-
         </section>}
-      
-      
       </div>
     </div>
 
