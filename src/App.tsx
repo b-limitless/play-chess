@@ -1,18 +1,17 @@
 import { Chess, ChessInstance } from 'chess.js';
 import Chessboard from 'chessboardjsx';
 import React, { useMemo, useState } from 'react';
-import './app.scss';
 import { Button } from './components/button';
 import Table from './components/table/table';
 import { GameHistoryItem, Move, SquareStyles } from './interfaces/chess.interface';
 import Header from './layouts/header/header';
 import Welcome from './layouts/welcome/welcome';
-import './styles/main.scss';
 import { generateComputerMove } from './utils/generateComputerMove';
 import { handleResign } from './utils/handleResign';
 import { onMouseOverSquare } from './utils/onMouseOverSquare';
 import { squareStyling } from './utils/squareStyling';
-
+import './styles/main.scss';
+import './app.scss';
 enum ETeam {
   Black = 'black',
   White = 'white'
