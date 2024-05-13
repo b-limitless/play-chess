@@ -2,7 +2,7 @@ import './table.scss';
 export default function Table({ data }: { data: any }) {
     return (
         <>
-            {data.length && <table id="moveHistory">
+            {data.length > 0 && <table id="moveHistory">
                 <tr>
                     <th>From</th>
                     <th>To</th>

@@ -1,11 +1,13 @@
 //https://tyler-reicks.medium.com/create-a-chess-game-with-react-and-chessboardjsx-%EF%B8%8F-128d1995a743
-import { Chess, ChessInstance } from "chess.js";
-import Chessboard from "chessboardjsx";
-import React, { useState } from "react";
+import { Chess, ChessInstance } from 'chess.js';
+import Chessboard from 'chessboardjsx';
+import React, { useState } from 'react';
 import './styles/main.scss';
 import './app.scss';
-import Table from "./components/table/table";
-import Welcome from "./layouts/welcome/welcome";
+import Table from './components/table/table';
+import Welcome from './layouts/welcome/welcome';
+import { Button } from './components/button';
+import Header from './layouts/header/header';
 
 enum ETeam {
   Black = 'black',
@@ -21,24 +23,24 @@ const generateComputerMove = (game: ChessInstance): string => {
   // Logic to generate the computer's move goes here
   // For now, let's just choose a random move from the available legal moves
   const moves = game.moves();
-  const randomMove = moves[Math.floor(Math.random() * moves.length)];
+  const randomMove = moves[Math.floor(Math.random() * moves?.length)];
   return randomMove;
 };
 
 const squareStyling = ({ pieceSquare, history }: ISquareStyling) => {
-  const sourceSquare = history.length && history[history.length - 1].from;
-  const targetSquare = history.length && history[history.length - 1].to;
+  const sourceSquare = history?.length && history[history?.length - 1].from;
+  const targetSquare = history?.length && history[history?.length - 1].to;
 
   return {
-    [pieceSquare]: { backgroundColor: "rgba(255, 255, 0, 0.4)" },
-    ...(history.length && {
+    [pieceSquare]: { backgroundColor: 'rgba(255, 255, 0, 0.4)' },
+    ...(history?.length && {
       [sourceSquare]: {
-        backgroundColor: "rgba(255, 255, 0, 0.4)"
+        backgroundColor: 'rgba(255, 255, 0, 0.4)'
       }
     }),
-    ...(history.length && {
+    ...(history?.length && {
       [targetSquare]: {
-        backgroundColor: "rgba(255, 255, 0, 0.4)"
+        backgroundColor: 'rgba(255, 255, 0, 0.4)'
       }
     })
   };
@@ -47,7 +49,7 @@ const squareStyling = ({ pieceSquare, history }: ISquareStyling) => {
 const App: React.FC = () => {
   const [chess] = useState<ChessInstance>(
     // Set initial state to FEN layout
-    new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
   );
   const [fen, setFen] = useState(chess.fen());
   const [squareStyles, setSquareStyles] = useState<any>({});
@@ -109,8 +111,8 @@ const App: React.FC = () => {
         return {
           ...a,
           [c]: {
-            background: "radial-gradient(circle, #fffc00 36%, transparent 40%)",
-            borderRadius: "50%"
+            background: 'radial-gradient(circle, #fffc00 36%, transparent 40%)',
+            borderRadius: '50%'
           }
         };
       },
@@ -126,9 +128,9 @@ const App: React.FC = () => {
   const onDragOverSquare = (square: any) => {
     setDropSquareStyle(
 
-      square === "e4" || square === "d4" || square === "e5" || square === "d5"
-        ? { backgroundColor: "cornFlowerBlue" }
-        : { boxShadow: "inset 0 0 1px 4px rgb(255, 255, 0)" }
+      square === 'e4' || square === 'd4' || square === 'e5' || square === 'd5'
+        ? { backgroundColor: 'cornFlowerBlue' }
+        : { boxShadow: 'inset 0 0 1px 4px rgb(255, 255, 0)' }
     );
   };
 
@@ -139,7 +141,7 @@ const App: React.FC = () => {
     let move = chess.move({
       from: pieceSquare,
       to: square,
-      promotion: "q" // always promote to a queen for example simplicity
+      promotion: 'q' // always promote to a queen for example simplicity
     });
 
     // illegal move
@@ -185,7 +187,7 @@ const App: React.FC = () => {
       piece: move.piece,
 
       // This promotion attribute changes pawns to a queen if they reach the other side of the board.
-      promotion: "q",
+      promotion: 'q',
     };
     //  setGameHistory([...gameHistory, moveObject]);
 
@@ -195,7 +197,7 @@ const App: React.FC = () => {
   const handleResign = () => {
     chess.reset();
     setFen(chess.fen());
-    setHistory(null);
+    setGameHistory([]);
 
   }
 
@@ -204,34 +206,42 @@ const App: React.FC = () => {
 
 
   return (
-    <div className="container">
-      <Welcome/>
-      {/* <section className="game">
-        <h1>Play with computer</h1>
-        <Chessboard
-          width={400}
-          position={fen}
-          // onDrop prop tracks every time a piece is moved.
-          // The rest is handled in the the handleMove function.
-          onDrop={onDrop}
-          boardStyle={{
-            borderRadius: "5px",
-            boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
-          }}
-          squareStyles={squareStyles}
-          dropSquareStyle={dropSquareStyle}
-          onDragOverSquare={onDragOverSquare}
-          onSquareClick={onSquareClick}
-          onMouseOutSquare={onMouseOutSquare}
-          onMouseOverSquare={onMouseOverSquare}
-        />
+    <div className='app dark-mode'>
+    <Header/>
+    <div className='container'>
+      {/* <Welcome/> */}
+      <section className='game'>
+        <div className='col'>
+          <Chessboard
+            width={400}
+            position={fen}
+            // onDrop prop tracks every time a piece is moved.
+            // The rest is handled in the the handleMove function.
+            onDrop={onDrop}
+            boardStyle={{
+              borderRadius: '5px',
+              boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
+            }}
+            squareStyles={squareStyles}
+            dropSquareStyle={dropSquareStyle}
+            onDragOverSquare={onDragOverSquare}
+            onSquareClick={onSquareClick}
+            onMouseOutSquare={onMouseOutSquare}
+            onMouseOverSquare={onMouseOverSquare}
+          />
 
-        <button onClick={handleResign}>Resign</button>
-        <button onClick={startChessGame}>Start Game</button>
+          <Button type='round' variant='primary' onClick={handleResign}>Resign</Button>
+          {/* <Button type='round' variant='primary' onClick={startChessGame}>Start Game</Button> */}
+        </div>
 
-        <Table data={gameHistory} />
-      </section> */}
+          <div className='col'>
+          <Table data={gameHistory} />
+          </div>
+        
+      </section>
     </div>
+    </div>
+    
   );
 };
 export default App;

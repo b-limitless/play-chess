@@ -1,7 +1,11 @@
 import React from 'react'
+import Switch from '../../components/switch/switch';
+import './header.scss';
 
-export default function header() {
+export default function Header() {
   return (
-    <div>header</div>
+    <header>
+      <Switch/>
+    </header>
   )
 }

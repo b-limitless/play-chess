@@ -1,5 +1,30 @@
+@import './colors';
+
+:root {
+    
+}
+
 body {
     margin: 0;
     padding: 0;
     font-family: Poppins, sans-serif;
+  
 }
+
+.app {
+    background-color: $light;
+    color: $dark;
+}
+
+.app.dark-mode {
+    background-color: $dark;
+    color: $light;
+}
+
+@media (prefers-color-scheme: dark) {
+    .app {
+        background-color: $dark;
+    color: $light;
+    }
+}
+
