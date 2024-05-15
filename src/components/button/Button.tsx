@@ -1,22 +1,47 @@
 import React, { ReactNode } from 'react'; 
 import styles from './button.module.scss';
+import './button.scss';
 
 type buttonType = 'round' | 'square';
-type buttonVariant = 'primary' | 'secondary';
+type buttonVariant = 'primary' | 'secondary' | 'dark' | 'red' | 'yellow' | 'dark__2' | 'dark__3';
 
 interface ButtonInterface {
     children:ReactNode;
     type: buttonType;
     variant: buttonVariant;
+    small?: boolean;
     [x:string]:any;
 }
-export default function Button({children, type, variant, ...rest}: ButtonInterface) {
+export default function Button({children, type, variant, small, ...rest}: ButtonInterface) {
   
-  let buttonBaseClass = styles.btn;
+  let buttonBaseClass = small ? styles.btn__small : styles.btn;
   
   if(variant === 'primary') {
-    buttonBaseClass += ' ' + styles.primary;
+    buttonBaseClass += ' ' + styles.primary; 
   }
+  if(variant === 'dark') {
+    buttonBaseClass += ' ' + styles.dark;
+  }
+
+  if(variant === 'red') {
+    buttonBaseClass += ' ' + styles.red;
+  }
+
+  if(variant === 'yellow') {
+    buttonBaseClass += ' ' + styles.yellow;
+  }
+
+
+  if(variant === 'dark__2') {
+    buttonBaseClass += ' ' + styles.dark__2;
+  
+  }
+
+  if(variant === 'dark__3') {
+    buttonBaseClass += ' ' + styles.dark__3;
+  
+  }
+  
 
   if(type === 'round') {
     buttonBaseClass += ' ' + styles.round;
