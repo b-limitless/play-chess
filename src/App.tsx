@@ -18,7 +18,7 @@ import './app.scss';
 
 
 const App: React.FC = () => {
-  const [chess] = useState<ChessInstance>(
+  const [chess, setChess] = useState<ChessInstance>(
     // Set initial state to FEN layout
     new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
   );
@@ -140,6 +140,17 @@ const App: React.FC = () => {
 
   const darkModeOnChangeHandler = (e: any) => {
     setDarkMode(prevState => !prevState);
+  }
+  
+  const rematchHandler = () => {
+    const newChess = new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+    setChess(newChess);
+    setFen(newChess.fen());
+    setGameHistory([]);
+    setHistory([]);
+    setSquareStyles({});
+    setPieceSquare('');
+    setDropSquareStyle({});
   }
 
   // Without even changing was re-rendering 4 times
