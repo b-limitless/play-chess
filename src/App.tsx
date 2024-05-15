@@ -84,7 +84,7 @@ const App: React.FC = () => {
         return {
           ...a,
           [c]: {
-            background: 'radial-gradient(circle, #fffc00 36%, transparent 40%)',
+            background: 'radial-gradient(circle, #eaaa2a 36%, transparent 40%)',
             borderRadius: '50%'
           }
         };
