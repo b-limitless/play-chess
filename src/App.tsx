@@ -10,12 +10,12 @@ import { generateComputerMove } from './utils/generateComputerMove';
 import { handleResign } from './utils/handleResign';
 import { onMouseOverSquare } from './utils/onMouseOverSquare';
 import { squareStyling } from './utils/squareStyling';
+import { EDifficultLevel } from './interfaces/chess.interface';
+import { ETeam } from './interfaces/chess.interface';
+
 import './styles/main.scss';
 import './app.scss';
-enum ETeam {
-  Black = 'black',
-  White = 'white'
-}
+
 
 const App: React.FC = () => {
   const [chess] = useState<ChessInstance>(
@@ -31,6 +31,9 @@ const App: React.FC = () => {
   const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
   const [startGame, setStartGame] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [difficulty, setDifficulty] = useState<EDifficultLevel>(EDifficultLevel.Easy);
+
+
 
   const handleMove = (move: any) => {
     if (chess.turn() === 'w') {
@@ -49,9 +52,9 @@ const App: React.FC = () => {
 
         // Lines 33-28: Computer random move.
         if (moves.length > 0) {
-          const computerMove = generateComputerMove(chess);
+          const computerMove = generateComputerMove(chess, EDifficultLevel.Medium);
 
-          const moveComputer = chess.move(computerMove);
+          const moveComputer = chess.move(computerMove as any);
 
           const { from, to, piece } = moveComputer as any;
           setGameHistory(prevHistory => [...prevHistory, { from, to, piece, team: ETeam.Black }]);

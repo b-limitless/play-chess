@@ -31,3 +31,14 @@ export interface GameHistoryItem {
   piece: string;
   team: string; // Assuming 'team' represents the player's team (e.g., 'white' or 'black')
 }
+
+export enum EDifficultLevel {
+  Easy = "easy",
+  Medium = "medium",
+  Hard = "hard",
+}
+
+export enum ETeam {
+  Black = "black",
+  White = "white",
+}
