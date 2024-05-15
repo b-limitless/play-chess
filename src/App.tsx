@@ -23,7 +23,15 @@ const App: React.FC = () => {
     new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
   );
   const [fen, setFen] = useState(chess.fen());
-  const [squareStyles, setSquareStyles] = useState<SquareStyles>({});
+  const [squareStyles, setSquareStyles] = useState<SquareStyles>({
+    // Light squares
+    ...(Array.from(Array(64).keys()).reduce((styles: SquareStyles, index: number) => {
+      const row = Math.floor(index / 8);
+      const col = index % 8;
+      const color = (row + col) % 2 === 0 ? 'white' : 'lightgray'; // Change colors as needed
+      return { ...styles, [index]: { backgroundColor: color } };
+    }, {}))
+  });
   const [pieceSquare, setPieceSquare] = useState<any>({})
   const [history, setHistory] = useState<Move[]>([]);
   const [dropSquareStyle, setDropSquareStyle] = useState<any>({});
@@ -141,7 +149,7 @@ const App: React.FC = () => {
   const darkModeOnChangeHandler = (e: any) => {
     setDarkMode(prevState => !prevState);
   }
-  
+
   const rematchHandler = () => {
     const newChess = new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
     setChess(newChess);
@@ -151,6 +159,20 @@ const App: React.FC = () => {
     setSquareStyles({});
     setPieceSquare('');
     setDropSquareStyle({});
+  }
+
+  const undoGame = () => {
+  chess.undo();
+  // Undo the second last move (user's move)
+  chess.undo();
+
+  // Update the FEN string to the new position
+  setFen(chess.fen());
+  // Update the move history
+  setHistory(chess.history({ verbose: true }));
+
+  // Remove the last two moves from the game history
+  setGameHistory(prevHistory => prevHistory.slice(0, -2));
   }
 
   // Without even changing was re-rendering 4 times
@@ -185,9 +207,14 @@ const App: React.FC = () => {
               onSquareClick={onSquareClick}
               onMouseOutSquare={onMouseOutSquare}
               onMouseOverSquare={(square) => onMouseOverSquare(chess, square, highlightSquare)}
+              darkSquareStyle={{ backgroundColor: '#f0f0f0' }}
+              lightSquareStyle={{ backgroundColor: 'gray' }}
             />
 
             <Button type='round' variant='primary' onClick={() => handleResign(chess, setFen, setGameHistory)}>Resign</Button>
+            <Button type='round' variant='primary' onClick={() => undoGame()}>Undo</Button>
+            <Button type='round' variant='primary' onClick={() => rematchHandler()}>Rematch</Button>
+          
           </div>
 
           <div className='col'>
