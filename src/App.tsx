@@ -209,6 +209,8 @@ const App: React.FC = () => {
               onMouseOverSquare={(square) => onMouseOverSquare(chess, square, highlightSquare)}
               darkSquareStyle={{ backgroundColor: '#f0f0f0' }}
               lightSquareStyle={{ backgroundColor: 'gray' }}
+              allowDrag={() => false}
+              draggable={false}
             />
 
             <Button type='round' variant='primary' onClick={() => handleResign(chess, setFen, setGameHistory)}>Resign</Button>
