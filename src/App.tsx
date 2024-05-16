@@ -39,7 +39,7 @@ const App: React.FC = () => {
 
   const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
   const [startGame, setStartGame] = useState<boolean>(false);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [darkMode, setDarkMode] = useState<boolean>(true);
   const [difficulty, setDifficulty] = useState<EDifficultLevel>(EDifficultLevel.Easy);
 
 
@@ -183,8 +183,8 @@ const App: React.FC = () => {
   return (
     <div className={`app ${darkModeMemo ? 'dark-mode' : ''}`}>
       <div className="wrapper">
-        <div className="col right">
-          <div className="row computer">
+        <div className="col right dark-mode">
+          <div className="row dark-mode computer">
             <img src='/svg/computer.svg' width={20} height={20} alt='' />
             <div>Computer</div>
           </div>
@@ -211,22 +211,22 @@ const App: React.FC = () => {
               draggable={false}
             />
           </div>
-          <div className="row guest">
+          <div className="row dark-mode guest">
             <img src='/svg/guest.svg' width={20} height={20} alt='' />
             <div>Guest</div>
           </div>
         </div>
-        <div className="col">
+        <div className="col dark-mode">
 
           <Button type='square' variant='primary'>React Chessboard</Button>
-          <div className="histories">
-            <div className="items">
+          <div className="histories dark-mode">
+            <div className="items dark-mode">
               <div className="item">1</div>
               <div className="item">er</div>
               <div className="item">45</div>
             </div>
 
-            <div className="items">
+            <div className="items dark-mode">
               <div className="item">1</div>
               <div className="item">er</div>
               <div className="item">45</div>

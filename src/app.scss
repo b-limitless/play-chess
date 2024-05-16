@@ -1,3 +1,6 @@
+@import "styles/colors";
+@import "styles/variables";
+
 .container {
   display: grid;
   align-items: center;
@@ -30,6 +33,14 @@
     display: flex;
     column-gap: 2rem;
 
+    @media only screen and (max-width: $bp-small) {
+        flex-direction: column;
+        row-gap: 1rem;
+    }
+
+    .col.dark-mode {
+        background-color: #374151 !important;
+    }
     .col {
       background-color: #e5e7eb;
       display: flex;
@@ -98,6 +109,9 @@
   }
 }
 
+.histories.dark-mode {
+    background-color: #4b5563;
+}
 .histories {
   background-color: #fff;
   display: flex;
@@ -106,6 +120,9 @@
   padding: 8px;
   min-height: 300px;
   overflow: auto;
+  .items.dark-mode {
+    background-color: #394251;
+  }
   .items {
     display: flex;
     justify-content: space-between;
@@ -114,9 +131,16 @@
   }
 }
 
+.right.dark-mode {
+
+}
 .right {
     justify-content: space-between;
     background-color: #e5e7eb;
+
+    .row.dark-mode {
+        background-color: #1f2937 !important;
+    }
 
     .row:first-child, 
     .row:last-child
