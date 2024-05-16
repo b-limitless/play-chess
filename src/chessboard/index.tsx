@@ -39,7 +39,7 @@ const ChessBoardComponent: React.FC = () => {
 
   const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
   const [startGame, setStartGame] = useState<boolean>(false);
-  const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   const [difficulty, setDifficulty] = useState<EDifficultLevel>(EDifficultLevel.Easy);
 
 
@@ -183,9 +183,9 @@ const ChessBoardComponent: React.FC = () => {
   return (
     <div className={`app ${darkModeMemo ? 'dark-mode' : ''}`}>
       <div className="wrapper">
-        <div className={`col right ${darkMode ? 'dark-mode' : ''}`}>
-          <div className={`row ${darkMode ? 'dark-mode' : ''} computer`}>
-            <img src='/svg/computer.svg' width={20} height={20} alt='' />
+        <div className={`col right`}>
+          <div className={`row computer`}>
+            <img src='/svg/computer.svg' width={20} height={20} alt='' className='computer-icon'/>
             <div>Computer</div>
           </div>
           <div className="row chessboard">
@@ -211,22 +211,22 @@ const ChessBoardComponent: React.FC = () => {
               draggable={false}
             />
           </div>
-          <div className={`row ${darkMode ? 'dark-mode' : ''} guest`}>
-            <img src='/svg/guest.svg' width={20} height={20} alt='' />
+          <div className={`row guest`}>
+            <img src='/svg/guest.svg' width={20} height={20} alt='' className='guest-icon'/>
             <div>Guest</div>
           </div>
         </div>
-        <div className={`col ${darkMode ? 'dark-mode' : ''}`}>
+        <div className={`col`}>
 
           <Button type='square' variant='primary'>React Chessboard</Button>
-          <div className={`histories ${darkMode ? 'dark-mode' : ''}`}>
-            <div className={`items ${darkMode ? 'dark-mode' : ''}`}>
+          <div className={`histories`}>
+            <div className={`items`}>
               <div className="item">1</div>
               <div className="item">er</div>
               <div className="item">45</div>
             </div>
 
-            <div className={`items ${darkMode ? 'dark-mode' : ''}`}>
+            <div className={`items`}>
               <div className="item">1</div>
               <div className="item">er</div>
               <div className="item">45</div>
@@ -254,7 +254,7 @@ const ChessBoardComponent: React.FC = () => {
 
             <div className="actions">
               <div className="title">Theme</div>
-              <div className={`actions-buttons theme ${darkMode ? 'dark-mode' : ''}`}>
+              <div className={`actions-buttons theme`}>
                 <Button
                   type='square'
                   variant='dark__3'>{darkMode ? 'Light Mode' : 'Dark Mode'}</Button>

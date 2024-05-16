@@ -10,7 +10,7 @@ interface IWelceom {
   setStartGame:Function;
 }
 const Welceom = () => {
- const [darkMode, setDarkMode] = useState<boolean>(true);
+ const [darkMode, setDarkMode] = useState<boolean>(false);
 
   // Without even changing was re-rendering 4 times
   // Therefore using memo to memotize the value
@@ -48,7 +48,7 @@ const Welceom = () => {
             
             <div className="actions">
               <div className="title">Theme</div>
-              <div className={`actions-buttons welcome ${darkMode ? 'dark-mode' : ''}`}>
+              <div className={`actions-buttons welcome`}>
                 <Button
                   addStyles='br-5'
                   type='square'
@@ -57,7 +57,7 @@ const Welceom = () => {
                   {darkMode ? 'Light Mode' : 'Dark Mode'}
                 </Button>
               </div>
-              <div className='test'>Dark Mode</div>
+              
             </div>
             
           </div>
