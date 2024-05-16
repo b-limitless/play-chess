@@ -18,8 +18,17 @@ const App: React.FC = () => {
       {/* <Header
         darkModeOnChangeHandler={darkModeOnChangeHandler}
       /> */}
-       {!startGame && <Welcome darkMode={darkMode} setDarkMode={setDarkMode}/>}
-      {startGame && <ChessBoardComponent darkMode={darkMode} setDarkMode={setDarkMode}/>}
+       {!startGame && <Welcome 
+         darkMode={darkMode} 
+         setDarkMode={setDarkMode}
+         setStartGame={setStartGame}
+         />
+         
+         }
+      {startGame && <ChessBoardComponent 
+                    darkMode={darkMode} 
+                    setDarkMode={setDarkMode}
+                    />}
     </>
 
   );

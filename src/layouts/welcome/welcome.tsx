@@ -6,11 +6,11 @@ import './welcome.scss';
 import { IMode } from '../../interfaces/chess.interface';
 
 interface IWelceom extends IMode {
-
+  setStartGame:Function;
 }
 
 
-const Welceom = ({darkMode, setDarkMode}: IWelceom) => {
+const Welceom = ({darkMode, setDarkMode, setStartGame}: IWelceom) => {
 
   // Without even changing was re-rendering 4 times
   // Therefore using memo to memotize the value
@@ -41,6 +41,7 @@ const Welceom = ({darkMode, setDarkMode}: IWelceom) => {
                 addStyles='br-5 dott-border'
                 variant='yellow' 
                 type='square'
+                onClick={() => setStartGame(true)}
               >
                 Play
               </Button>

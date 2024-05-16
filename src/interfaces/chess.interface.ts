@@ -14,6 +14,10 @@ export interface Move {
   piece: string;
 }
 
+export interface IMoveHistory extends Move {
+  team: ETeam;
+}
+
 // Define your own type for the history array
 export interface ChessHistoryItem {
   from: Square;

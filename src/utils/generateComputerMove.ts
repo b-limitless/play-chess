@@ -7,6 +7,7 @@ export const generateComputerMove = (
   difficulty: EDifficultLevel
 ) => {
   const moves = chess.moves();
+  console.log('difficult level')
 
   if (difficulty === EDifficultLevel.Easy) {
     // Easy: Random move

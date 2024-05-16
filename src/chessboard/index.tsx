@@ -1,9 +1,9 @@
 import { Chess, ChessInstance } from 'chess.js';
 import Chessboard from 'chessboardjsx';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Button } from '../components/button';
 import Table from '../components/table/table';
-import { GameHistoryItem, IMode, Move, SquareStyles } from '../interfaces/chess.interface';
+import { GameHistoryItem, IMode, IMoveHistory, Move, SquareStyles } from '../interfaces/chess.interface';
 import Header from '../layouts/header/header';
 import Welcome from '../layouts/welcome/welcome';
 import { generateComputerMove } from '../utils/generateComputerMove';
@@ -17,11 +17,21 @@ import { ETeam } from '../interfaces/chess.interface';
 import '../styles/main.scss';
 import '../app.scss';
 
-interface IChess extends IMode{
+interface IChess extends IMode {
 
 }
 
-const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
+
+const HistoryItem = ({ from, to, piece, team }: IMoveHistory) => {
+  return <div className={`items`}>
+    <div className="item">{from}</div>
+    <div className="item">{to}</div>
+    <div className="item">{piece}</div>
+    <div className="item">{team}</div>
+  </div>
+}
+
+const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
   const [chess, setChess] = useState<ChessInstance>(
     // Set initial state to FEN layout
     new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
@@ -47,7 +57,8 @@ const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
 
 
 
-  const handleMove = (move: any) => {
+
+  const handleMove = useCallback((move: any) => {
     if (chess.turn() === 'w') {
       const { from, to, piece } = move;
       setGameHistory(prevHistory => [...prevHistory, { from, to, piece, team: ETeam.White }]);
@@ -62,9 +73,10 @@ const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
           return;
         }
 
+        console.log('difficult', difficulty)
         // Lines 33-28: Computer random move.
         if (moves.length > 0) {
-          const computerMove = generateComputerMove(chess, EDifficultLevel.Medium);
+          const computerMove = generateComputerMove(chess, difficulty);
 
           const moveComputer = chess.move(computerMove as any);
 
@@ -80,7 +92,7 @@ const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
     } else {
       setGameHistory(prevHistory => prevHistory.slice(0, -1));
     }
-  };
+  }, [difficulty, chess]);
 
   const highlightSquare = (sourceSquare: any, squaresToHighlight: any) => {
     const highlightStyles = [sourceSquare, ...squaresToHighlight].reduce(
@@ -151,7 +163,7 @@ const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
   }
 
   const darkModeOnChangeHandler = (e: any) => {
-    setDarkMode(( prevState:boolean) => !prevState);
+    setDarkMode((prevState: boolean) => !prevState);
   }
 
   const rematchHandler = () => {
@@ -188,7 +200,7 @@ const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
       <div className="wrapper">
         <div className={`col right`}>
           <div className={`row computer`}>
-            <img src='/svg/computer.svg' width={20} height={20} alt='' className='computer-icon'/>
+            <img src='/svg/computer.svg' width={20} height={20} alt='' className='computer-icon' />
             <div>Computer</div>
           </div>
           <div className="row chessboard">
@@ -210,12 +222,12 @@ const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
               onMouseOverSquare={(square) => onMouseOverSquare(chess, square, highlightSquare)}
               darkSquareStyle={{ backgroundColor: '#f0f0f0' }}
               lightSquareStyle={{ backgroundColor: 'gray' }}
-              allowDrag={() => false}
-              draggable={false}
+              allowDrag={() => true}
+              draggable={true}
             />
           </div>
           <div className={`row guest`}>
-            <img src='/svg/guest.svg' width={20} height={20} alt='' className='guest-icon'/>
+            <img src='/svg/guest.svg' width={20} height={20} alt='' className='guest-icon' />
             <div>Guest</div>
           </div>
         </div>
@@ -223,35 +235,32 @@ const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
 
           <Button type='square' variant='primary'>React Chessboard</Button>
           <div className={`histories`}>
-            <div className={`items`}>
-              <div className="item">1</div>
-              <div className="item">er</div>
-              <div className="item">45</div>
-            </div>
 
-            <div className={`items`}>
-              <div className="item">1</div>
-              <div className="item">er</div>
-              <div className="item">45</div>
-            </div>
+            {gameHistory.map(({from, to, piece, team}, i) => 
+              <HistoryItem 
+              from={from} 
+              to={to} 
+              piece={piece} 
+              team={team as any}/>)}
+            
           </div>
 
           <div className="action-wrapper">
             <div className="actions">
               <div className="title">Actions</div>
               <div className="actions-buttons">
-                <Button small type='square' variant='dark' onClick={() => undoGame()}>Rematch</Button>
+                <Button small type='square' variant='dark' onClick={() => rematchHandler()}>Rematch</Button>
                 <Button small type='square' variant='dark' onClick={() => undoGame()}>Undo</Button>
-                <Button small type='square' variant='red' onClick={() => undoGame()}>Resign</Button>
+                <Button small type='square' variant='red' onClick={() => handleResign(chess, setFen, setGameHistory)}>Resign</Button>
               </div>
             </div>
 
             <div className="actions">
               <div className="title">Difficulty</div>
               <div className="actions-buttons">
-                <Button small type='square' variant='yellow' onClick={() => undoGame()}>Easy</Button>
-                <Button small type='square' variant='dark__2' onClick={() => undoGame()}>Medium</Button>
-                <Button small type='square' variant='dark__2' onClick={() => undoGame()}>Hard</Button>
+                <Button small type='square' variant='yellow' onClick={() => setDifficulty(EDifficultLevel.Easy)}>Easy</Button>
+                <Button small type='square' variant='dark__2' onClick={() => setDifficulty(EDifficultLevel.Medium)}>Medium</Button>
+                <Button small type='square' variant='dark__2' onClick={() => setDifficulty(EDifficultLevel.Hard)}>Hard</Button>
               </div>
             </div>
 
