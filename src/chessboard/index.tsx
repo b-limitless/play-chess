@@ -44,10 +44,9 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
   const [pieceSquare, setPieceSquare] = useState<any>({})
   const [history, setHistory] = useState<Move[]>([]);
   const [dropSquareStyle, setDropSquareStyle] = useState<any>({});
-
   const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
-
   const [difficulty, setDifficulty] = useState<EDifficultLevel>(EDifficultLevel.Easy);
+  const [winner, setWinner] = useState<ETeam | null>(null);
 
 
 
@@ -67,7 +66,7 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
           return;
         }
 
-        
+
         // Lines 33-28: Computer random move.
         if (moves.length > 0) {
           const computerMove = generateComputerMove(chess, difficulty);
@@ -185,6 +184,11 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
     setGameHistory(prevHistory => prevHistory.slice(0, -2));
   }
 
+  const setWinnerHandler = () => {
+    setWinner(ETeam.Black);
+  }
+
+  console.log('winner', winner)
   // Without even changing was re-rendering 4 times
   // Therefore using memo to memotize the value
   const darkModeMemo = useMemo(() => darkMode, [darkMode])
@@ -192,7 +196,9 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
   return (
     <div className={`app ${darkModeMemo ? 'dark-mode' : ''}`}>
       <div className="wrapper">
+
         <div className={`col right`}>
+
           <div className={`row computer`}>
             <img src='/svg/computer.svg' width={20} height={20} alt='' className='computer-icon' />
             <div>Computer</div>
@@ -216,7 +222,7 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
               onMouseOverSquare={(square) => onMouseOverSquare(chess, square, highlightSquare)}
               darkSquareStyle={{ backgroundColor: '#aaaaaa' }}
               lightSquareStyle={{ backgroundColor: '#eeeeee' }}
-              
+
               allowDrag={() => true}
               draggable={true}
             />
@@ -231,13 +237,13 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
           <Button type='square' variant='primary'>React Chessboard</Button>
           <div className={`histories`}>
 
-            {gameHistory.map(({from, to, piece, team}, i) => 
-              <HistoryItem 
-              from={from} 
-              to={to} 
-              piece={piece} 
-              team={team as any}/>)}
-            
+            {gameHistory.map(({ from, to, piece, team }, i) =>
+              <HistoryItem
+                from={from}
+                to={to}
+                piece={piece}
+                team={team as any} />)}
+
           </div>
 
           <div className="action-wrapper">
@@ -245,8 +251,8 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
               <div className="title">Actions</div>
               <div className="actions-buttons">
                 <Button small type='square' variant='dark' onClick={() => rematchHandler()}>Rematch</Button>
-                <Button small type='square' variant='dark' onClick={() => gameHistory.length > 0  ? undoGame() : null}>Undo</Button>
-                <Button small type='square' variant='red' onClick={() => handleResign(chess, setFen, setGameHistory)}>Resign</Button>
+                <Button small type='square' variant='dark' onClick={() => gameHistory.length > 0 ? undoGame() : null}>Undo</Button>
+                <Button small type='square' variant='red' onClick={() => handleResign(chess, setFen, setGameHistory, setWinnerHandler)}>Resign</Button>
               </div>
             </div>
 
@@ -260,7 +266,7 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
             </div>
 
             <div className="actions">
-              <div className="title">Theme</div>
+              <div className="title mt-10">Theme</div>
               <div className={`actions-buttons theme`}>
                 <Button
                   onClick={() => darkModeOnChangeHandler()}
@@ -272,50 +278,6 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
           </div>
         </div>
       </div>
-
-
-      {/* <Header
-    darkModeOnChangeHandler={darkModeOnChangeHandler}
-  /> */}
-      {/* <div className='container'>
-    {!startGame && <Welcome setStartGame={setStartGame} />}
-
-    {startGame && <section className='game'>
-      <div className='col'>
-        <Chessboard
-
-          width={400}
-          position={fen}
-          // onDrop prop tracks every time a piece is moved.
-          // The rest is handled in the the handleMove function.
-          onDrop={onDrop}
-          boardStyle={{
-            borderRadius: '5px',
-            boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`
-          }}
-          squareStyles={squareStyles}
-          dropSquareStyle={dropSquareStyle}
-          onDragOverSquare={onDragOverSquare}
-          onSquareClick={onSquareClick}
-          onMouseOutSquare={onMouseOutSquare}
-          onMouseOverSquare={(square) => onMouseOverSquare(chess, square, highlightSquare)}
-          darkSquareStyle={{ backgroundColor: '#f0f0f0' }}
-          lightSquareStyle={{ backgroundColor: 'gray' }}
-          allowDrag={() => false}
-          draggable={false}
-        />
-
-        <Button type='round' variant='primary' onClick={() => handleResign(chess, setFen, setGameHistory)}>Resign</Button>
-        <Button type='round' variant='primary' onClick={() => undoGame()}>Undo</Button>
-        <Button type='round' variant='primary' onClick={() => rematchHandler()}>Rematch</Button>
-      
-      </div>
-
-      <div className='col'>
-        <Table data={gameHistory} />
-      </div>
-    </section>}
-  </div> */}
     </div>
 
 

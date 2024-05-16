@@ -1,41 +1,40 @@
 $dark: #1f2937;
 $gray: #848484;
 $light: #fff;
-$yellow:#eaaa2a;
-$dark-1:#222;
-$dark-2:#333;
-$light-1:#f2f2f2;
-$dark-3:#030712;
+$yellow: #eaaa2a;
+$dark-1: #222;
+$dark-2: #333;
+$light-1: #f2f2f2;
+$dark-3: #030712;
 
 // Button colors
-$gray-1:#6b7280;
-$red:#dc2626;
+$gray-1: #6b7280;
+$red: #dc2626;
 $yellow: #ca8a04;
 $gray-2: #475569;
 
-
 :root {
-    --body-background: #d1d5db;
-    --column-background: #e5e7eb;
-    --history-background: #ffffff;
-    --history-item: #e1e3e7;
-    --them-button: #030712;
-    --button-text: #2b2e34;
-    --robot-svg: #000;
-    --icon-colors: brightness(0) saturate(100%) invert(0%) sepia(95%) saturate(7482%) hue-rotate(9deg) brightness(103%) contrast(100%);
+  --body-background: #d1d5db;
+  --column-background: #e5e7eb;
+  --history-background: #ffffff;
+  --history-item: #e1e3e7;
+  --them-button: #030712;
+  --button-text: #2b2e34;
+  --robot-svg: #000;
+  --icon-colors: brightness(0) saturate(100%) invert(0%) sepia(95%)
+    saturate(7482%) hue-rotate(9deg) brightness(103%) contrast(100%);
+}
 
-  }
-  
-  .dark-mode {
-    --body-background: #1f2937;
-    --column-background: #374151;
-    --history-background: #4b5563;
-    --history-item: #394251;
-    --them-button: #d1d5db;
-    --button-text: #c4c7ca;
-    --robot-svg: #fff;
-    --icon-colors: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(181deg) brightness(103%) contrast(103%);
-  
-    /* Add more variables as needed */
-  }
-  
+.dark-mode {
+  --body-background: #1f2937;
+  --column-background: #374151;
+  --history-background: #4b5563;
+  --history-item: #394251;
+  --them-button: #d1d5db;
+  --button-text: #c4c7ca;
+  --robot-svg: #fff;
+  --icon-colors: brightness(0) saturate(100%) invert(100%) sepia(100%)
+    saturate(0%) hue-rotate(181deg) brightness(103%) contrast(103%);
+
+  /* Add more variables as needed */
+}

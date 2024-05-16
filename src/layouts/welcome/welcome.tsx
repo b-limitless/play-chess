@@ -1,16 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Button } from '../../components/button';
-import RoobotSVG from '/svg/robot.svg';
 
-import './welcome.scss';
 import { IMode } from '../../interfaces/chess.interface';
+import './welcome.scss';
 
 interface IWelceom extends IMode {
-  setStartGame:Function;
+  setStartGame: Function;
 }
 
 
-const Welceom = ({darkMode, setDarkMode, setStartGame}: IWelceom) => {
+const Welceom = ({ darkMode, setDarkMode, setStartGame }: IWelceom) => {
 
   // Without even changing was re-rendering 4 times
   // Therefore using memo to memotize the value
@@ -20,53 +19,53 @@ const Welceom = ({darkMode, setDarkMode, setStartGame}: IWelceom) => {
     <div className={`app ${darkModeMemo ? 'dark-mode' : ''}`}>
       <div className="wrapper">
         <div className={`col js-center ${darkMode ? 'dark-mode' : ''}`}>
-          
+
           <div className="row chessboard">
-            <img src='/img/chess.png' width={400} alt='chessboard'/>
+            <img src='/img/chess.png' width={400} alt='chessboard' />
           </div>
-          
+
         </div>
         <div className={`col js-center ${darkMode ? 'dark-mode' : ''}`}>
-  
+
           <Button type='square' variant='primary'>React Chessboard</Button>
           <div className="robot">
-            <img src='/svg/robot.svg' width={300} className={darkMode ? '' : 'dark-mode'}/>
+            <img alt='' src='/svg/robot.svg' width={300} className={darkMode ? '' : 'dark-mode'} />
           </div>
-          
+
           <div className="actions">
             <div className="accept">Accept the challenge</div>
             <h1>Let's play</h1>
             <div className="row">
-              <Button 
+              <Button
                 addStyles='br-5 dotted-border '
-                variant='yellow' 
+                variant='yellow'
                 type='square'
                 onClick={() => setStartGame(true)}
               >
                 Play
               </Button>
             </div>
-            
+
             <div className="actions">
-              <div className="title">Theme</div>
+              <div className="title mt-10">Theme</div>
               <div className={`actions-buttons welcome`}>
                 <Button
                   addStyles='br-5'
                   type='square'
                   variant='dark__3'
-                  onClick={() => setDarkMode((prevState:boolean) => !darkMode)}
+                  onClick={() => setDarkMode((prevState: boolean) => !darkMode)}
                 >
                   {darkMode ? 'Light Mode' : 'Dark Mode'}
                 </Button>
               </div>
-              
+
             </div>
-            
+
           </div>
         </div>
       </div>
     </div>
   );
-  
+
 };
 export default Welceom;
