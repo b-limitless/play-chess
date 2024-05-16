@@ -10,9 +10,10 @@ interface ButtonInterface {
     type: buttonType;
     variant: buttonVariant;
     small?: boolean;
+    addStyles?:any;
     [x:string]:any;
 }
-export default function Button({children, type, variant, small, ...rest}: ButtonInterface) {
+export default function Button({children, type, variant, small, addStyles, ...rest}: ButtonInterface) {
   
   let buttonBaseClass = small ? styles.btn__small : styles.btn;
   
@@ -48,7 +49,7 @@ export default function Button({children, type, variant, small, ...rest}: Button
   }
   
   return (
-    <button className={buttonBaseClass} {...rest}>
+    <button className={`${buttonBaseClass} ${addStyles}`} {...rest}>
         {children}
     </button>
   )

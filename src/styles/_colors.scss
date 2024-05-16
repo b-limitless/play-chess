@@ -14,3 +14,25 @@ $yellow: #ca8a04;
 $gray-2: #475569;
 
 
+:root {
+    --body-background: #d1d5db;
+    --column-background: #e5e7eb;
+    --history-background: #4b5563;
+    --history-item: #e1e3e7;
+    --them-button: #030712;
+    --button-text: #2b2e34;
+    --robot-svg: #000;
+  }
+  
+  .dark-mode {
+    --body-background: #1f2937;
+    --column-background: #374151;
+    --history-background: #4b5563;
+    --history-item: #394251;
+    --them-button: #d1d5db;
+    --button-text: #c4c7ca;
+    --robot-svg: #fff;
+  
+    /* Add more variables as needed */
+  }
+  

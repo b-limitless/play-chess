@@ -1,6 +1,8 @@
 @import "styles/colors";
 @import "styles/variables";
 
+
+
 .container {
   display: grid;
   align-items: center;
@@ -97,9 +99,12 @@
     .actions-buttons {
       display: flex;
       flex-grow: 1;
-      column-gap: 8px;
-
-     
+      column-gap: 8px;     
+    }
+    .actions-buttons.dark-mode {
+        button {
+            background-color: #d1d5db !important;
+        }
     }
     .theme {
       button {
@@ -151,4 +156,38 @@
     }
 
    
+}
+
+.col.js-center {
+    justify-content: center;
+}
+
+.robot {
+    display: flex;
+    justify-content: center;
+}
+
+.actions-buttons.welcome {
+    button {
+        width: 100%;
+    }
+}
+
+.br-5 {
+    border-radius: 5px;
+}
+
+.dott-border {
+    // border: 5px solid #713f12 !important;
+    // border-style: dotted !important;
+}
+
+.actions {
+    h1 {
+        margin: 0.30em 0;
+    }
+}
+
+.test {
+    background-color: var(--body-background);
 }
