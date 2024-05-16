@@ -3,14 +3,14 @@ import { Button } from '../../components/button';
 import RoobotSVG from '/svg/robot.svg';
 
 import './welcome.scss';
+import { IMode } from '../../interfaces/chess.interface';
 
+interface IWelceom extends IMode {
 
-
-interface IWelceom {
-  setStartGame:Function;
 }
-const Welceom = () => {
- const [darkMode, setDarkMode] = useState<boolean>(false);
+
+
+const Welceom = ({darkMode, setDarkMode}: IWelceom) => {
 
   // Without even changing was re-rendering 4 times
   // Therefore using memo to memotize the value
@@ -53,6 +53,7 @@ const Welceom = () => {
                   addStyles='br-5'
                   type='square'
                   variant='dark__3'
+                  onClick={() => setDarkMode((prevState:boolean) => !darkMode)}
                 >
                   {darkMode ? 'Light Mode' : 'Dark Mode'}
                 </Button>

@@ -161,7 +161,6 @@
 .guest-icon {
   filter: invert(1);
   /* or to blue */
-  filter: brightness(0) saturate(100%) invert(0%) sepia(95%) saturate(7482%) hue-rotate(9deg) brightness(103%) contrast(100%);
+  filter: var(--icon-colors)
 
-  
 }

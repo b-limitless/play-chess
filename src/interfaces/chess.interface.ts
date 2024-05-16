@@ -42,3 +42,8 @@ export enum ETeam {
   Black = "black",
   White = "white",
 }
+
+export interface IMode {
+  darkMode: boolean;
+  setDarkMode: Function;
+}

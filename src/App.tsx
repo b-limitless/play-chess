@@ -11,14 +11,15 @@ const App: React.FC = () => {
   // // Therefore using memo to memotize the value
   // const darkModeMemo = useMemo(() => darkMode, [darkMode])
   const [startGame, setStartGame] = useState<boolean>(false);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
   return (
 
     <>
       {/* <Header
         darkModeOnChangeHandler={darkModeOnChangeHandler}
       /> */}
-       {/* {!startGame && <Welcome/>} */}
-      <ChessBoardComponent />
+       {!startGame && <Welcome darkMode={darkMode} setDarkMode={setDarkMode}/>}
+      {startGame && <ChessBoardComponent darkMode={darkMode} setDarkMode={setDarkMode}/>}
     </>
 
   );

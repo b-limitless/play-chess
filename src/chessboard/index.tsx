@@ -3,7 +3,7 @@ import Chessboard from 'chessboardjsx';
 import React, { useMemo, useState } from 'react';
 import { Button } from '../components/button';
 import Table from '../components/table/table';
-import { GameHistoryItem, Move, SquareStyles } from '../interfaces/chess.interface';
+import { GameHistoryItem, IMode, Move, SquareStyles } from '../interfaces/chess.interface';
 import Header from '../layouts/header/header';
 import Welcome from '../layouts/welcome/welcome';
 import { generateComputerMove } from '../utils/generateComputerMove';
@@ -17,8 +17,11 @@ import { ETeam } from '../interfaces/chess.interface';
 import '../styles/main.scss';
 import '../app.scss';
 
+interface IChess extends IMode{
 
-const ChessBoardComponent: React.FC = () => {
+}
+
+const ChessBoardComponent = ({darkMode, setDarkMode}: IChess) => {
   const [chess, setChess] = useState<ChessInstance>(
     // Set initial state to FEN layout
     new Chess('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
@@ -39,7 +42,7 @@ const ChessBoardComponent: React.FC = () => {
 
   const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
   const [startGame, setStartGame] = useState<boolean>(false);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
+
   const [difficulty, setDifficulty] = useState<EDifficultLevel>(EDifficultLevel.Easy);
 
 
@@ -148,7 +151,7 @@ const ChessBoardComponent: React.FC = () => {
   }
 
   const darkModeOnChangeHandler = (e: any) => {
-    setDarkMode(prevState => !prevState);
+    setDarkMode(( prevState:boolean) => !prevState);
   }
 
   const rematchHandler = () => {
