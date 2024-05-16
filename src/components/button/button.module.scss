@@ -3,26 +3,63 @@
 .btn {
   border: none;
   color: $light;
-  font-family: Montserrat;
-  font-size: 18px;
+  font-family: $default-font;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   letter-spacing: 0.9px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   display: flex;
   justify-content: center;
-  padding: 19px 56px;
+  padding: 14px 24px;
   column-gap: 15px;
   font-family: $default-font;
   align-items: center;
   cursor: pointer;
 }
+.btn__small {
+  border: none;
+  color: $light;
+  font-family: $default-font;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+  padding: 5px 35px;
+  font-family: $default-font;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #000;
+  min-width: 130px;
+}
 .primary {
   background: $dark;
-  box-shadow: 0px 7px 20px 0px rgba(121, 188, 207, 0.4);
 }
-
+.dark {
+  background: $gray-1;
+  border-bottom: 5px solid #2e2e2f;
+}
+.dark__3 {
+  background: var(--them-button);
+  border-bottom: 5px solid #2e2e2f;
+}
 .round {
   border-radius: 100px;
+}
+.dark__1 {
+}
+.red {
+  background: $red;
+  border-bottom: 5px solid #2e2e2f;
+}
+.yellow {
+  background: $yellow;
+  border-bottom: 5px solid #98742f;
+}
+.dark__2 {
+  background: #475569;
+  border-bottom: 5px solid #2e2e2f;
 }

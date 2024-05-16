@@ -7,11 +7,6 @@ body {
 }
 
 .app {
-  background-color: $light;
-  color: $dark;
-}
-
-.app.dark-mode {
-  background-color: $dark;
-  color: $light;
+  background-color: var(--body-background);
+  color: var(--robot-svg);
 }

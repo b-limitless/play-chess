@@ -14,6 +14,10 @@ export interface Move {
   piece: string;
 }
 
+export interface IMoveHistory extends Move {
+  team: ETeam;
+}
+
 // Define your own type for the history array
 export interface ChessHistoryItem {
   from: Square;
@@ -30,4 +34,20 @@ export interface GameHistoryItem {
   to: Square;
   piece: string;
   team: string; // Assuming 'team' represents the player's team (e.g., 'white' or 'black')
+}
+
+export enum EDifficultLevel {
+  Easy = "easy",
+  Medium = "medium",
+  Hard = "hard",
+}
+
+export enum ETeam {
+  Black = "black",
+  White = "white",
+}
+
+export interface IMode {
+  darkMode: boolean;
+  setDarkMode: Function;
 }
