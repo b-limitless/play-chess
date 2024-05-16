@@ -51,7 +51,6 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
   const [dropSquareStyle, setDropSquareStyle] = useState<any>({});
 
   const [gameHistory, setGameHistory] = useState<GameHistoryItem[]>([]);
-  const [startGame, setStartGame] = useState<boolean>(false);
 
   const [difficulty, setDifficulty] = useState<EDifficultLevel>(EDifficultLevel.Easy);
 
@@ -73,7 +72,7 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
           return;
         }
 
-        console.log('difficult', difficulty)
+        
         // Lines 33-28: Computer random move.
         if (moves.length > 0) {
           const computerMove = generateComputerMove(chess, difficulty);
@@ -162,7 +161,7 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
     handleMove(moveObject)
   }
 
-  const darkModeOnChangeHandler = (e: any) => {
+  const darkModeOnChangeHandler = () => {
     setDarkMode((prevState: boolean) => !prevState);
   }
 
@@ -250,7 +249,7 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
               <div className="title">Actions</div>
               <div className="actions-buttons">
                 <Button small type='square' variant='dark' onClick={() => rematchHandler()}>Rematch</Button>
-                <Button small type='square' variant='dark' onClick={() => undoGame()}>Undo</Button>
+                <Button small type='square' variant='dark' onClick={() => gameHistory.length > 0  ? undoGame() : null}>Undo</Button>
                 <Button small type='square' variant='red' onClick={() => handleResign(chess, setFen, setGameHistory)}>Resign</Button>
               </div>
             </div>
@@ -268,6 +267,7 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
               <div className="title">Theme</div>
               <div className={`actions-buttons theme`}>
                 <Button
+                 onClick={() => darkModeOnChangeHandler()}
                   type='square'
                   variant='dark__3'>{darkMode ? 'Light Mode' : 'Dark Mode'}</Button>
               </div>
