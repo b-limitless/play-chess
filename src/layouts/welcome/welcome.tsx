@@ -38,7 +38,7 @@ const Welceom = ({darkMode, setDarkMode, setStartGame}: IWelceom) => {
             <h1>Let's play</h1>
             <div className="row">
               <Button 
-                addStyles='br-5 dott-border'
+                addStyles='br-5 dotted-border '
                 variant='yellow' 
                 type='square'
                 onClick={() => setStartGame(true)}

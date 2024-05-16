@@ -31,7 +31,7 @@
   height: 100vh;
   .wrapper {
     display: flex;
-    column-gap: 2rem;
+    column-gap: 1rem;
 
     @media only screen and (max-width: $bp-small) {
       flex-direction: column;
@@ -94,8 +94,12 @@
       display: flex;
       flex-grow: 1;
       column-gap: 8px;
+
+      button {
+        color: var(--body-background) !important;
+      }
     }
-   
+
     .theme {
       button {
         width: 100%;
@@ -103,7 +107,6 @@
     }
   }
 }
-
 
 .histories {
   background-color: var(--history-background);
@@ -114,7 +117,7 @@
   min-height: 300px;
   max-height: 350px;
   overflow: auto;
-  
+
   .items {
     display: flex;
     justify-content: space-between;
@@ -158,10 +161,18 @@
   padding: 8px;
 }
 
-.computer-icon, 
+.computer-icon,
 .guest-icon {
   filter: invert(1);
   /* or to blue */
-  filter: var(--icon-colors)
+  filter: var(--icon-colors);
+}
 
+.dotted-border {
+  border: 5px solid #713f12 !important;
+  border-style: dotted !important;
+  position: relative;
+  box-shadow: 0px 5px 0px 0px #755310;
+
+  
 }

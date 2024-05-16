@@ -1,21 +1,16 @@
 import { Chess, ChessInstance } from 'chess.js';
 import Chessboard from 'chessboardjsx';
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button } from '../components/button';
-import Table from '../components/table/table';
-import { GameHistoryItem, IMode, IMoveHistory, Move, SquareStyles } from '../interfaces/chess.interface';
-import Header from '../layouts/header/header';
-import Welcome from '../layouts/welcome/welcome';
+import { EDifficultLevel, ETeam, GameHistoryItem, IMode, IMoveHistory, Move, SquareStyles } from '../interfaces/chess.interface';
 import { generateComputerMove } from '../utils/generateComputerMove';
 import { handleResign } from '../utils/handleResign';
 import { onMouseOverSquare } from '../utils/onMouseOverSquare';
 import { squareStyling } from '../utils/squareStyling';
-import { EDifficultLevel } from '../interfaces/chess.interface';
-import { ETeam } from '../interfaces/chess.interface';
 
 
-import '../styles/main.scss';
 import '../app.scss';
+import '../styles/main.scss';
 
 interface IChess extends IMode {
 
@@ -219,8 +214,9 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
               onSquareClick={onSquareClick}
               onMouseOutSquare={onMouseOutSquare}
               onMouseOverSquare={(square) => onMouseOverSquare(chess, square, highlightSquare)}
-              darkSquareStyle={{ backgroundColor: '#f0f0f0' }}
-              lightSquareStyle={{ backgroundColor: 'gray' }}
+              darkSquareStyle={{ backgroundColor: '#aaaaaa' }}
+              lightSquareStyle={{ backgroundColor: '#eeeeee' }}
+              
               allowDrag={() => true}
               draggable={true}
             />
@@ -267,7 +263,7 @@ const ChessBoardComponent = ({ darkMode, setDarkMode }: IChess) => {
               <div className="title">Theme</div>
               <div className={`actions-buttons theme`}>
                 <Button
-                 onClick={() => darkModeOnChangeHandler()}
+                  onClick={() => darkModeOnChangeHandler()}
                   type='square'
                   variant='dark__3'>{darkMode ? 'Light Mode' : 'Dark Mode'}</Button>
               </div>

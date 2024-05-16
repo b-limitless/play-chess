@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './app.scss';
 import ChessBoardComponent from './chessboard';
 import './styles/main.scss';
@@ -9,17 +9,17 @@ const App: React.FC = () => {
   
   // // Without even changing was re-rendering 4 times
   // // Therefore using memo to memotize the value
-  // const darkModeMemo = useMemo(() => darkMode, [darkMode])
+  
   const [startGame, setStartGame] = useState<boolean>(false);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+
+  const darkModeMemo = useMemo(() => darkMode, [darkMode])
   return (
 
     <>
-      {/* <Header
-        darkModeOnChangeHandler={darkModeOnChangeHandler}
-      /> */}
+     
        {!startGame && <Welcome 
-         darkMode={darkMode} 
+         darkMode={darkModeMemo} 
          setDarkMode={setDarkMode}
          setStartGame={setStartGame}
          />
